@@ -448,8 +448,6 @@ export default function Filter({ setStateMenuFilter, openWindowFilter }) {
 
   // Apply Filter List
   function applyFilter() {
-    // const filterDataIfExist = state.data.map(item => !state.listOfFilter.has(item))
-    //   console.log(filterDataIfExist);
     dispatch({
       type: "APPLY_FILTER",
     });

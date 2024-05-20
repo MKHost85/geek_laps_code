@@ -1,8 +1,7 @@
-// import React, { useState } from "react";
+import React from "react";
 import { useContext } from "react";
 import Slice from "../Slice/Slice";
 import { GlobalContext } from "../../Context/Store";
-// import data from "../../data";
 
 export default function Content() {
   const { state } = useContext(GlobalContext);
