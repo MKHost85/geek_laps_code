@@ -1,26 +1,9 @@
-import {  useState } from "react";
+import { useContext, useState } from "react";
 import IndustryIcom from "./IndustryIcon/IndustryIcom";
-export default function Filter({
-  setStateMenuFilter,
-  openWindowFilter,
-  handleChangeIndustry,
-  handleChangeMarketCap,
-  handleChangeRiskLevel,
-  handleChangeStrategy,
-  handleChangeAsset,
-  handleSaveFilter,
-  stockFilter,
-}) {
-  const [idIndustry, setInDustry] = useState([]);
-
-  function handleClickIndustry(name, icon) {
-    setInDustry([name, icon]);
-    console.log(idIndustry);
-    handleChangeIndustry(...idIndustry);
-  }
-
-  function toChiled() {}
-
+import { GlobalContext } from "../../Context/Store";
+import SavedFilter from "./SavedFilter/SavedFilter";
+export default function Filter({ setStateMenuFilter, openWindowFilter }) {
+  // lest of icons
   const listIcons = [
     {
       id: 1,
@@ -290,7 +273,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -299,7 +281,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -308,7 +289,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -317,7 +297,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -326,7 +305,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -335,7 +313,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -344,7 +321,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -353,7 +329,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -362,7 +337,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -371,7 +345,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -380,7 +353,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
           <path
             className="group-hover:fill-[#000]"
@@ -389,7 +361,6 @@ export default function Filter({
             strokeWidth="0.754789"
             strokeLinejoin="10"
             strokeLinecap="round"
-            stroke-linejoin="round"
           />
         </svg>
       ),
@@ -435,13 +406,65 @@ export default function Filter({
     },
   ];
 
+  const { dispatch } = useContext(GlobalContext);
+
+  // get Data From Input
+  const [industry, setIndustry] = useState("");
+  const [marketCap, setMarketCap] = useState("Micro");
+  const [riskLevel, setRiskLevel] = useState("Low Risk");
+  const [strategy, setStrategy] = useState("Merger Arbitrage");
+  const [asset, setAsset] = useState("Options");
+
+  function handleChangeIndustry(name) {
+    setIndustry(name);
+  }
+  function handleChangeMarketCap(value) {
+    setMarketCap(value);
+  }
+  function handleChangeRiskLevel(value) {
+    setRiskLevel(value);
+  }
+  function handleChangeStrategy(value) {
+    setStrategy(value);
+  }
+  function handleChangeAsset(value) {
+    setAsset(value);
+  }
+
+  // Save Filters To Array
+  function handleAddToFilterList() {
+    if (industry !== "") {
+      dispatch({
+        type: "ADD_FILTER",
+        id: Date.now(),
+        industry: industry,
+        marketCap: marketCap,
+        riskLevel: riskLevel,
+        strategy: strategy,
+        asset: asset,
+      });
+    }
+  }
+
+  // Apply Filter List
+  function applyFilter() {
+    // const filterDataIfExist = state.data.map(item => !state.listOfFilter.has(item))
+    //   console.log(filterDataIfExist);
+    dispatch({
+      type: "APPLY_FILTER",
+    });
+  }
+
+  // add class when select industry and remove from else
+  const [idToStyle, setIdToStyle] = useState("");
+
   return (
     <div
       className={`${
         openWindowFilter ? "block" : "hidden"
-      } max-xl:absolute xl:block z-10 top-0 left-0 w-full h-full  backdrop-blur-[2px]`}
+      } max-xl:absolute xl:block z-10 top-0 left-0 w-full xl:w-[540px] h-full xl:flex-none  backdrop-blur-[2px]`}
     >
-      <div className="relative top-[38px] max-xl:w-[90%] left-[5%] pt-[14px] pb-[20px] px-[20px] bg-[#181818] z-30">
+      <div className="relative top-[38px] max-sm:w-[350px] sm:w-[420px] md:w-[540px] xl:w-auto mx-auto  left-[5%] pt-[14px] pb-[20px] px-[20px] bg-[#181818] z-30">
         <div className="flex flex-col">
           <div className="text-right">
             <button
@@ -471,22 +494,18 @@ export default function Filter({
             <h4 className="md:text-[#979797] md:text-[20px]">
               Filters Applied
             </h4>
-            <button className="md:text-[18px]">Clear All</button>
+            <button
+              className="md:text-[18px]"
+              onClick={() => dispatch({ type: "CLEAR_FILTER" })}
+            >
+              Clear All
+            </button>
           </div>
-          <div className="flex flex-row flex-wrap bg-[#202020] text-[10px] min-h-[26px] md:min-h-[50px] w-full mb-[9px] rounded-sm">
-            {stockFilter.length > 1
-              ? stockFilter.map((item) => (
-                  <li
-                    key={item.id}
-                    className="flex flex-row items-center gap-x-[3px] w-fit h-[15px] cursor-pointer group hover:bg-[#53ACFF] hover:text-[#000] rounded-md px-[4px] "
-                  >
-                    {item.icon}
-                    <span>{item.name}</span>
-                  </li>
-                ))
-              : ""}
+          <div className=" bg-[#202020] text-[10px] min-h-[26px] md:min-h-[50px] w-full mb-[9px] rounded-sm">
+            <SavedFilter listIcons={listIcons} />
           </div>
         </div>
+        {/* Compnent Choese Filter */}
         <div className="bg-[#202020] pl-[19px] pr-[17px] pt-[12px] pb-[18px] mb-[14px] rounded-sm ">
           <h5 className="text-[12px] font-bold pb-[5px] md:text-[18px]">
             Stock
@@ -516,14 +535,12 @@ export default function Filter({
                       stroke="#6B6B6B"
                       strokeWidth="1.50958"
                       strokeLinecap="round"
-                      stroke-linejoin="round"
                     />
                     <path
                       d="M7.59814 7.25296L10.3217 9.9769"
                       stroke="#6B6B6B"
                       strokeWidth="1.50958"
                       strokeLinecap="round"
-                      stroke-linejoin="round"
                     />
                   </g>
                 </svg>
@@ -546,8 +563,9 @@ export default function Filter({
                         <IndustryIcom
                           data={item}
                           key={item.id}
-                          handleClickIndustry={handleClickIndustry}
-                          toChiled={toChiled}
+                          handleClickIndustry={handleChangeIndustry}
+                          idToStyle={idToStyle}
+                          setIdToStyle={setIdToStyle}
                         />
                       ))
                     : ""}
@@ -562,12 +580,15 @@ export default function Filter({
                 <div className="flex flex-col text-[10px] md:text-[14px] lg:text-[16px] gap-y-[4px]">
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="micro"
+                      value="Micro"
                       type="radio"
                       name="radio-group1"
                       id="radio-1"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
-                      onChange={(e) => handleChangeMarketCap(e.target.value)}
+                      checked={marketCap === "Micro" ? true : false}
+                      onChange={(e) => {
+                        handleChangeMarketCap(e.target.value);
+                      }}
                     />
                     <label
                       htmlFor="radio-1"
@@ -579,12 +600,15 @@ export default function Filter({
                   </div>
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="small"
+                      value="Small"
                       type="radio"
                       name="radio-group1"
                       id="radio-2"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
-                      onChange={(e) => handleChangeMarketCap(e.target.value)}
+                      checked={marketCap === "Small" ? true : false}
+                      onChange={(e) => {
+                        handleChangeMarketCap(e.target.value);
+                      }}
                     />
                     <label
                       htmlFor="radio-2"
@@ -596,12 +620,15 @@ export default function Filter({
                   </div>
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="large"
+                      value="Large"
                       type="radio"
                       name="radio-group1"
                       id="radio-3"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
-                      onChange={(e) => handleChangeMarketCap(e.target.value)}
+                      checked={marketCap === "Large" ? true : false}
+                      onChange={(e) => {
+                        handleChangeMarketCap(e.target.value);
+                      }}
                     />
                     <label
                       htmlFor="radio-3"
@@ -620,12 +647,15 @@ export default function Filter({
                 <div className="flex flex-col text-[10px] md:text-[14px] lg:text-[16px] gap-y-[4px]">
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="L"
+                      value="Low Risk"
                       type="radio"
                       name="radio-group11"
                       id="radio-11"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
-                      onChange={(e) => handleChangeRiskLevel(e.target.value)}
+                      checked={riskLevel === "Low Risk" ? true : false}
+                      onChange={(e) => {
+                        handleChangeRiskLevel(e.target.value);
+                      }}
                     />
                     <label
                       htmlFor="radio-11"
@@ -637,11 +667,12 @@ export default function Filter({
                   </div>
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="M"
+                      value="Mid Risk"
                       type="radio"
                       name="radio-group11"
                       id="radio-12"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
+                      checked={riskLevel === "Mid Risk" ? true : false}
                       onChange={(e) => handleChangeRiskLevel(e.target.value)}
                     />
                     <label
@@ -654,11 +685,12 @@ export default function Filter({
                   </div>
                   <div className="flex flex-row items-center gap-x-[9px] relative">
                     <input
-                      value="H"
+                      value="High Risk"
                       type="radio"
                       name="radio-group11"
                       id="radio-13"
                       className="radio-button__input absolute w-0 h-0 opacity-0 "
+                      checked={riskLevel === "High Risk" ? true : false}
                       onChange={(e) => handleChangeRiskLevel(e.target.value)}
                     />
                     <label
@@ -686,6 +718,7 @@ export default function Filter({
                     name="strategy"
                     id="strategy_big_options_buys"
                     className="absolute w-0 h-0 opacity-0 radio_startegy__input"
+                    checked={strategy === "big option buys" ? true : false}
                     onChange={(e) => handleChangeStrategy(e.target.value)}
                   />
                   <label
@@ -697,11 +730,12 @@ export default function Filter({
                 </div>
                 <div className=" text-transparent bg-clip-text bg-gradient-to-t from-[#fff] to-[#202020] relative">
                   <input
-                    value="merger arbitrage"
+                    value="Merger Arbitrage"
                     type="radio"
                     name="strategy"
                     id="strategy_marger_arbitrage"
                     className="absolute w-0 h-0 opacity-0 radio_startegy__input"
+                    checked={strategy === "Merger Arbitrage" ? true : false}
                     onChange={(e) => handleChangeStrategy(e.target.value)}
                   />
                   <label
@@ -713,11 +747,12 @@ export default function Filter({
                 </div>
                 <div className=" text-transparent bg-clip-text bg-gradient-to-t from-[#fff] to-[#202020] relative">
                   <input
-                    value="short reports"
+                    value="Short Reports"
                     type="radio"
                     name="strategy"
                     id="strategy_short_reports"
                     className="absolute w-0 h-0 opacity-0 radio_startegy__input"
+                    checked={strategy === "Short Reports" ? true : false}
                     onChange={(e) => handleChangeStrategy(e.target.value)}
                   />
                   <label
@@ -736,11 +771,12 @@ export default function Filter({
               <div className="text-[10px] flex flex-col gap-y-[1px] items-center ">
                 <div className=" text-transparent bg-clip-text bg-gradient-to-t from-[#fff] to-[#202020] relative">
                   <input
-                    value="stocks"
+                    value="Stocks"
                     type="radio"
                     name="asset"
                     id="asset_stocks"
                     className="absolute w-0 h-0 opacity-0 radio_asset__input"
+                    checked={asset === "Stocks" ? true : false}
                     onChange={(e) => handleChangeAsset(e.target.value)}
                   />
                   <label
@@ -752,11 +788,12 @@ export default function Filter({
                 </div>
                 <div className=" text-transparent bg-clip-text bg-gradient-to-t from-[#fff] to-[#202020] relative">
                   <input
-                    value="options"
+                    value="Options"
                     type="radio"
                     name="asset"
                     id="asset_options"
                     className="absolute w-0 h-0 opacity-0 radio_asset__input"
+                    checked={asset === "Options" ? true : false}
                     onChange={(e) => handleChangeAsset(e.target.value)}
                   />
                   <label
@@ -773,6 +810,7 @@ export default function Filter({
                     name="asset"
                     id="asset_futures"
                     className="absolute w-0 h-0 opacity-0 radio_asset__input"
+                    checked={asset === "futures" ? true : false}
                     onChange={(e) => handleChangeAsset(e.target.value)}
                   />
                   <label
@@ -786,14 +824,18 @@ export default function Filter({
             </div>
           </div>
         </div>
+        {/* Save And Apply Filter */}
         <div className="flex justify-center gap-x-[13px]">
           <button
-            onClick={handleSaveFilter}
+            onClick={handleAddToFilterList}
             className="font-semibold text-[10px] md:text-[14px] lg:text-[16px] w-[100px] md:w-[120px] py-[5px] border rounded-sm hover:bg-gray-500 ease-linear duration-100"
           >
             Save Filter
           </button>
-          <button className="font-semibold text-[10px] md:text-[14px] lg:text-[16px] w-[100px] md:w-[120px] py-[5px] rounded-sm bg-[#53ACFF] relative after:context-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:transition-all after:ease-linear after:duration-100 after:h-full  after:opacity-0 after:hover:opacity-30  hover:after:shadow-[inset_0_-18px_21px_-5px_#000] ">
+          <button
+            onClick={() => applyFilter()}
+            className="font-semibold text-[10px] md:text-[14px] lg:text-[16px] w-[100px] md:w-[120px] py-[5px] rounded-sm bg-[#53ACFF] relative after:context-[''] after:absolute after:w-full after:bottom-0 after:left-0 after:transition-all after:ease-linear after:duration-100 after:h-full  after:opacity-0 after:hover:opacity-30  hover:after:shadow-[inset_0_-18px_21px_-5px_#000] "
+          >
             Apply
           </button>
         </div>

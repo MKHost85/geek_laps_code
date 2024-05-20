@@ -1,19 +1,24 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useContext } from "react";
 import logo from "./street suite logo-04.png";
+import { GlobalContext } from "../../Context/Store";
 export default function Navbar() {
+  const { state } = useContext(GlobalContext);
   return (
     <>
-      <div className="flex flex-col justify-between px-[4px] h-full pb-[51px]">
+      <div className="flex flex-col justify-between px-[4px] h-full pb-[51px] ">
         <div className="flex flex-col gap-y-[46px]">
           <div>
             <img src={logo} alt="logo" />
           </div>
           <ul className="flex flex-col justify-center gap-y-[26px] ">
-            <li className="text-center text-[20px] md:text-[2">
-              <a href="#" className="inline-block">
+            <li className="text-left text-[20px] ">
+              <a
+                href="#"
+                className=" flex flex-row justify-center group-hover:justify-start group-hover:pl-[20px] items-center "
+              >
                 <svg
-                className="size-[24px]"
+                  className="size-[24px] lg:size-[28px] lg:pr-[5px]"
                   width="18"
                   height="17"
                   viewBox="0 0 18 17"
@@ -25,12 +30,15 @@ export default function Navbar() {
                     fill="#53ACFF"
                   />
                 </svg>
+                <span className="hidden lg:block text-[0px] font-semibold group-hover:text-[20px] transition-all duration-300">
+                  Alerts
+                </span>
               </a>
             </li>
-            <li className="text-center text-[20px] md:text-[2">
-              <a href="#" className="inline-block">
+            <li className="text-left text-[20px] ">
+              <a href="#" className=" flex flex-row justify-center group-hover:justify-start group-hover:pl-[20px]">
                 <svg
-                className="size-[24px]"
+                  className="size-[24px] lg:size-[28px] lg:pr-[5px]"
                   width="20"
                   height="14"
                   viewBox="0 0 20 14"
@@ -46,12 +54,15 @@ export default function Navbar() {
                     fill="white"
                   />
                 </svg>
+                <span className="hidden lg:block text-[0px] font-semibold group-hover:text-[20px] transition-all duration-300">
+                  Training
+                </span>
               </a>
             </li>
-            <li className="text-center text-[20px] md:text-[2">
-              <a href="#" className="inline-block">
+            <li className="text-left text-[20px] ">
+              <a href="#" className=" flex flex-row justify-center group-hover:justify-start group-hover:pl-[20px]">
                 <svg
-                className="size-[24px]"
+                  className="size-[24px] lg:size-[28px] lg:pr-[5px]"
                   width="23"
                   height="20"
                   viewBox="0 0 23 20"
@@ -71,12 +82,15 @@ export default function Navbar() {
                     fill="#5D5D5D"
                   />
                 </svg>
+                <span className="hidden lg:block text-[0px] font-semibold group-hover:text-[20px] transition-all duration-300">
+                  Automation
+                </span>
               </a>
             </li>
-            <li className="text-center text-[20px] md:text-[2">
-              <a href="#" className="inline-block">
+            <li className="text-left text-[20px] ">
+              <a href="#" className=" flex flex-row justify-center group-hover:justify-start group-hover:pl-[20px]">
                 <svg
-                className="size-[24px]"
+                  className="size-[24px] lg:size-[28px] lg:pr-[5px]"
                   width="25"
                   height="18"
                   viewBox="0 0 25 18"
@@ -88,12 +102,15 @@ export default function Navbar() {
                     fill="#5D5D5D"
                   />
                 </svg>
+                <span className="hidden lg:block text-[0px] font-semibold group-hover:text-[20px] transition-all duration-300">
+                  Portfolio
+                </span>
               </a>
             </li>
-            <li className="text-center text-[20px] md:text-[2">
-              <a href="#" className="inline-block">
+            <li className="text-left text-[20px] ">
+              <a href="#" className=" flex flex-row justify-center group-hover:justify-start group-hover:pl-[20px]">
                 <svg
-                className="size-[24px]"
+                  className="size-[24px] lg:size-[28px] lg:pr-[5px]"
                   width="24"
                   height="20"
                   viewBox="0 0 24 20"
@@ -109,6 +126,9 @@ export default function Navbar() {
                     fill="#5D5D5D"
                   />
                 </svg>
+                <span className="hidden lg:block text-[0px] font-semibold group-hover:text-[20px] transition-all duration-300">
+                  Trading
+                </span>
               </a>
             </li>
           </ul>
@@ -117,7 +137,7 @@ export default function Navbar() {
           <a className="relative cursor-pointer xl:hidden">
             <i>
               <svg
-              className="size-[24px] "
+                className="size-[24px] "
                 width="22"
                 height="22"
                 viewBox="0 0 22 22"
@@ -131,12 +151,12 @@ export default function Navbar() {
               </svg>
             </i>
             <span className="absolute top-[-5px] right-0 bg-[#118F4B] rounded-full size-[11px] text-center leading-tight text-[9px]">
-              6
+              {state.listOfFilter.length}
             </span>
           </a>
           <a className="cursor-pointer">
             <svg
-            className="size-[24px] xl:size-[32px]"
+              className="size-[24px] xl:size-[32px]"
               width="29"
               height="29"
               viewBox="0 0 29 29"
